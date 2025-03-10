@@ -42,6 +42,8 @@ class partido {
 
     void adiciona_votos_legenda(int novos_votos);
 
+    map<int, candidato> get_candidatos() const;
+
     // função de organizar candidatos faltando
 
     void imprime();

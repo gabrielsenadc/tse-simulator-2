@@ -40,4 +40,8 @@ void partido::adiciona_votos_legenda(int novos_votos) {
     this -> votos_legenda += novos_votos;
 }
 
+map<int, candidato> partido::get_candidatos() const{
+    return this->candidatos;
+}
+
 void imprime(); // to do

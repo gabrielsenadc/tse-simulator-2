@@ -44,4 +44,17 @@ map<int, candidato> partido::get_candidatos() const{
     return this->candidatos;
 }
 
-void imprime(); // to do
+void partido::sort_candidatos() {
+    sort(this->candidatos.begin(), this->candidatos.end(), compara_candidatos);
+}
+
+bool compara_partidos(partido p1, partido p2) {
+    if(p1.get_votos_totais() != p2.get_votos_totais()) return p1.get_votos_totais() > p2.get_votos_totais();
+
+    return p2.get_numero() > p1.get_numero();
+}
+
+// Essa aqui não está pronta
+bool compara_partidos_posicao(partido p1, partido p2) {
+    return true;
+}

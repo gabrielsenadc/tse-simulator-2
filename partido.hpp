@@ -4,7 +4,9 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include "partido.hpp"
+
+class partido;
+
 #include "candidato.hpp"
 
 using namespace std;
@@ -17,7 +19,6 @@ class partido {
     int votos_nominais;
     int votos_legenda;
     bool federacao;
-    //Comparator<Candidato> comp_candidatos = new ComparaCandidatos();
 
     public:
     partido(const int &numero, const string &nome, const bool federacao) : numero(numero), nome(nome), federacao(federacao) {}
@@ -44,9 +45,12 @@ class partido {
 
     map<int, candidato> get_candidatos() const;
 
-    // função de organizar candidatos faltando
-
-    void imprime();
+    void sort_candidatos();
+    
 };
+
+bool compara_partidos(partido p1, partido p2);
+
+bool compara_partidos_posicao(partido p1, partido p2);
 
 #endif

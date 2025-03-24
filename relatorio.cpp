@@ -1,19 +1,10 @@
 #include "relatorio.hpp"
 
-bool compara_candidatos(candidato c1, candidato c2){
-    if(c1.get_votos() != c2.get_votos()) return c1.get_votos() > c2.get_votos();
+void candidato_imprime(candidato c, int n){
+    cout << n << " - ";
 
-    return c1.is_mais_velho(c2);
-}
-
-bool compara_partidos(partido p1, partido p2){
-    if(p1.get_votos_totais() != p2.get_votos_totais()) return p1.get_votos_totais() > p2.get_votos_totais();
-
-    return p2.get_numero() > p1.get_numero();
-}
-
-bool compara_partidos_posicao(partido p1, partido p2){
-    return true;
+    if(c.get_partido()->is_federacao()) cout << "*";
+    cout << c.get_nome() << " (" << c.get_partido()->get_nome() << ", " << c.get_votos() << " votos)" << endl;
 }
 
 
@@ -42,7 +33,7 @@ void relatorio::relatorio2() const{
     for(const auto c : this->candidatos) {
         if(!c.get_eleito()) continue;
 
-        //c.imprime(n++);
+        candidato_imprime(c, n++);
     }
 
 }
@@ -55,7 +46,7 @@ void relatorio::relatorio3() const{
     for(const auto c : this->candidatos) {
         if(n > this->eleitos.size()) break;
 
-        //c.imprime(n++);
+        candidato_imprime(c, n++);
     }
 
 }
@@ -72,7 +63,7 @@ void relatorio::relatorio4() const{
 
         if(c.get_eleito()) continue;
 
-        //c.imprime(n);
+        candidato_imprime(c, n);
     }
 
 }
@@ -89,7 +80,7 @@ void relatorio::relatorio5() const{
         
         if(!c.get_eleito()) continue;
 
-        //c.imprime(n);
+        candidato_imprime(c, n);
     }
 
 }
@@ -136,17 +127,100 @@ void relatorio::relatorio7() const{
         if(p.get_votos_nominais() == 0) continue;
 
         cout << n << " - " << p.get_nome() << " - " << p.get_numero() << ", ";
-        /*Candidato primeiro = p.getCandidadoPosicao(0);
+        /*candidato primeiro = p.get_candidado_posicao(0);
 
-        int size = p.getCandidatos().size() - 1;
-        Candidato ultimo = p.getCandidadoPosicao(size);
+        int size = p.get_candidatos().size() - 1;
+        candidato ultimo = p.get_candidado_posicao(size);
 
-        if(primeiro.getVotos() > 1) System.out.printf("%s (%d, %s votos) / ", primeiro.getNome(), primeiro.getNumero(), String.format("%,d", primeiro.getVotos()));
-        else System.out.printf("%s (%d, %s voto) / ", primeiro.getNome(), primeiro.getNumero(), String.format("%,d", primeiro.getVotos()));
+        if(primeiro.get_votos() > 1) cout << primeiro.get_nome() << " (" << primeiro.get_numero() << ", " << primeiro.get_votos() << " votos) / ";
+        else cout << primeiro.get_nome() << " (" << primeiro.get_numero() << ", " << primeiro.get_votos() << " voto) / ";
 
 
-        if(ultimo.getVotos() > 1) System.out.printf("%s (%d, %s votos)\n", ultimo.getNome(), ultimo.getNumero(), String.format("%,d", ultimo.getVotos()));
-        else System.out.printf("%s (%d, %s voto)\n", ultimo.getNome(), ultimo.getNumero(), String.format("%,d", ultimo.getVotos()));*/
+        if(ultimo.get_votos() > 1) cout << ultimo.get_nome() << " (" << ultimo.get_numero() << ", " << ultimo.get_votos() << " votos)" << endl;
+        else cout << ultimo.get_nome() << " (" << ultimo.get_numero() << ", " << ultimo.get_votos() << " voto)" << endl;*/
     }
 
+}
+
+void relatorio::relatorio8() const{
+    int b30 = 0, b30_40 = 0, b40_50 = 0, b50_60 = 0, b60 = 0;
+
+    int idade = 0;
+    /*for(const auto c : this->eleitos){
+        idade = c.get_idade();
+
+        if(idade < 30) b30++;
+        else if(idade < 40) b30_40++;
+        else if(idade < 50) b40_50++;
+        else if(idade < 60) b50_60++;
+        else b60++;
+    }*/
+
+    float total = this->eleitos.size();
+
+    if(total == 0) {
+        cout << "0 eleitos registrados" << endl;
+        return;
+    }
+
+    cout << "Eleitos, por faixa etária (na data da eleição):" << endl;
+
+    cout << "      Idade < 30: " << b30 << " (" << (b30 * 100) / total << "%" << endl;
+    cout << "30 <= Idade < 40: " << b30_40 << " (" << (b30_40 * 100) / total << "%" << endl;
+    cout << "40 <= Idade < 50: " << b40_50 << " (" << (b40_50 * 100) / total << "%" << endl;
+    cout << "50 <= Idade < 60: " << b50_60 << " (" << (b50_60 * 100) / total << "%" << endl;
+    cout << "60 <= Idade     : " << b60 << " (" << (b60 * 100) / total << "%" << endl;
+}
+
+void relatorio::relatorio9() const{
+    int m = 0, f = 0;
+
+    for(const auto c : this->eleitos){
+        if(c.get_genero() == 2) m++;
+        else f++;
+    }
+
+    float total = this->eleitos.size();
+
+    if(total == 0) {
+        cout << "0 eleitos registrados" << endl;
+        return;
+    }
+
+    cout << "Eleitos, por gênero:" << endl;
+
+    cout << "Feminino: " << f << " (" << (f * 100) / total << "%" << endl;
+    cout << "Masculino: " << m << " (" << (m * 100) / total << "%" << endl;
+}
+
+void relatorio::relatorio10() const{
+    int total = 0, legenda = 0, nominal = 0;
+
+    for(const auto &[id, p] : this->partidos){
+        total += p.get_votos_totais();
+        legenda += p.get_votos_legenda();
+        nominal += p.get_votos_nominais();
+    }
+
+    if(total == 0) {
+        cout << "0 eleitos registrados" << endl;
+        return;
+    }
+
+    cout << "Total de votos válidos: " << total << endl;
+    cout << "Total de votos nominais: " << nominal << " (" << (nominal * 100) / total << "%" << endl;
+    cout << "Total de votos de legenda: " << legenda << " (" << (legenda * 100) / total << "%" << endl;
+}
+
+void relatorio::gera_relatorio() const{
+    this->relatorio1();
+    this->relatorio2();
+    this->relatorio3();
+    this->relatorio4();
+    this->relatorio5();
+    this->relatorio6();
+    this->relatorio7();
+    this->relatorio8();
+    this->relatorio9();
+    this->relatorio10();
 }

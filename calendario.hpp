@@ -21,7 +21,9 @@ class calendario {
 
 };
 
-const int calendario_mais_antigo(calendario d1, calendario d2);
+const int calendario_mais_antigo(calendario c1, calendario c2);
+
+const int calendario_diferenca_anos(calendario c1, calendario c2);
 
 #endif
 

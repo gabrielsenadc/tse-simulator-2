@@ -1,9 +1,9 @@
-#ifndef data_hpp
-#define data_hpp
+#ifndef calendario_hpp
+#define calendario_hpp
 
 #include <string>
 
-class data {
+class calendario {
 
     int dia;
     int mes;
@@ -11,7 +11,7 @@ class data {
 
     public:
     
-    data(const int dia, const int mes, const int ano);
+    calendario(const int dia, const int mes, const int ano);
 
     const int &get_dia() const;
 
@@ -21,7 +21,7 @@ class data {
 
 };
 
-const int data_mais_antiga(data d1, data d2);
+const int calendario_mais_antigo(calendario d1, calendario d2);
 
 #endif
 

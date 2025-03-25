@@ -1,4 +1,10 @@
-#include "sistema_eleitoral.hpp"
+/**
+ * 2o Trabalho de Programação Orientada a Objetos (2024/02)
+ * Professor: João Paulo Andrade Almeida
+ * Alunos: Eduardo Silva (2023100580) e Gabriel Sena (2023100257)
+ */
+
+ #include "sistema_eleitoral.hpp"
 #include <string>
 #include <iostream>
 #include <fstream>

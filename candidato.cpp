@@ -1,3 +1,9 @@
+/**
+ * 2o Trabalho de Programação Orientada a Objetos (2024/02)
+ * Professor: João Paulo Andrade Almeida
+ * Alunos: Eduardo Silva (2023100580) e Gabriel Sena (2023100257)
+ */
+
 #include "candidato.hpp"
 
 const int &candidato::get_numero() const {

@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
-
+#include <iostream>
+#include <sstream>
 #include "candidato.hpp"
 #include "partido.hpp"
 #include "relatorio.hpp"
@@ -23,15 +24,19 @@ int main(int argc, char **argv){
 
     int cidade = stoi(argv[1]);
 
-    calendario data(6, 10, 2024);
+    istringstream data(argv[4]);
+    string dia;
+    string mes;
+    string ano;
+    getline(data, dia, '/');
+    getline(data, mes, '/');
+    getline(data, ano, '/');
+    calendario data_eleicao(stoi(dia), stoi(mes), stoi(ano));
 
-    sistema_eleitoral se(cidade, string(argv[2]), string(argv[3]), data);
+    sistema_eleitoral se(cidade, string(argv[2]), string(argv[3]), data_eleicao);
 
-    relatorio r(se.get_candidatos(), se.get_partidos(), data);
+    relatorio r(se.get_candidatos(), se.get_partidos(), data_eleicao);
     r.gera_relatorio();
-
-    locale loc(cout.getloc(), new numpunct<char>);
-	cout.imbue(loc);
 
     cout.imbue(locale("C"));
     std::locale::global(std::locale("C"));

@@ -93,9 +93,9 @@ sistema_eleitoral::sistema_eleitoral(int cidade, string path_candidatos, string 
 
         getline(linha_atual, dado_lido, ';');
         string eleicao(dado_lido);
-        int resultado = 0;
+        /*int resultado = 0;
         if(!eleicao.compare("ELEITO POR QP")) resultado = 1;
-        else if(!eleicao.compare("ELEITO POR MÉDIA")) resultado = 2;
+        else if(!eleicao.compare("ELEITO POR MÉDIA")) resultado = 2;*/
 
         // Vereadores com candidatura inválida não são adicionados à hash de candidatos
         if(eleito) {
@@ -113,17 +113,66 @@ sistema_eleitoral::sistema_eleitoral(int cidade, string path_candidatos, string 
     getline(arquivo_votos, linha);
     linha_atual = istringstream(linha);
 
-    // Copiar e adaptar a parte respectiva no T1
+    while(!linha.empty()) {
+
+        string dado_lido;
+        getline(linha_atual, dado_lido, ';');
+        for(int i = 0; i < 13; i++) getline(linha_atual, dado_lido, ';');
+
+        // Se não for um voto na cidade que queremos, simplesmente ignora e passa para a próxima linha
+        if(stoi(dado_lido) != cidade) {
+            getline(arquivo_votos, linha);
+            linha_atual = istringstream(linha);
+            continue;
+        }
+
+        getline(linha_atual, dado_lido, ';');
+
+        for(int i = 0; i < 2; i++) getline(linha_atual, dado_lido, ';');
+
+        getline(linha_atual, dado_lido, ';');
+
+        // Verifica se é voto de vereador
+        if(stoi(dado_lido) != 13) {
+            getline(arquivo_votos, linha);
+            linha_atual = istringstream(linha);
+            continue;
+        }
+
+        int numeroCandidato;
+        int votos = 0;
+
+        getline(linha_atual, dado_lido, ';');
+        
+        getline(linha_atual, dado_lido, ';');
+        numeroCandidato = stoi(dado_lido);
+
+        getline(linha_atual, dado_lido, ';');
+
+        getline(linha_atual, dado_lido, ';');
+        votos = stoi(dado_lido);
+
+        // Filtra votos de legenda e ignora votos brancos ou nulos
+        if(numeroCandidato <= 94) {
+            partidos.at(numeroCandidato).adiciona_votos_legenda(votos);
+            getline(arquivo_votos, linha);
+            linha_atual = istringstream(linha);
+            continue;
+        }
+
+        if(candidatos.find(numeroCandidato) != candidatos.end()) candidatos.at(numeroCandidato).aumenta_votos(votos);
+
+        getline(arquivo_candidatos, linha);
+        linha_atual = istringstream(linha);   
+    }
 
     arquivo_candidatos.close();
 }
 
 const map<int, candidato> &sistema_eleitoral::get_candidatos() const {
-    map<int, candidato> copia(this -> candidatos);
-    return copia;
+   return this->candidatos;
 }
 
 const map<int, partido> &sistema_eleitoral::get_partidos() const {
-    map<int, partido> copia(this -> partidos);
-    return copia;
+    return this->partidos;
 }

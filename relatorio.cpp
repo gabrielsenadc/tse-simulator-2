@@ -1,4 +1,5 @@
 #include "relatorio.hpp"
+#include <iomanip>
 
 void candidato_imprime(candidato c, int n){
     cout << n << " - ";
@@ -42,7 +43,7 @@ void relatorio::relatorio3() const{
     
     cout << "Candidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):" << endl;
 
-    int n = 1;
+    long unsigned int n = 1;
     for(const auto &c : this->candidatos) {
         if(n > this->eleitos.size()) break;
 
@@ -56,7 +57,7 @@ void relatorio::relatorio4() const{
     cout << "Teriam sido eleitos se a votação fosse majoritária, e não foram eleitos:" << endl;
     cout << "(com sua posição no ranking de mais votados)" << endl;
 
-    int n = 0;
+    long unsigned int n = 0;
     for(const auto &c : this->candidatos) {
         n++;
         if(n > this->eleitos.size()) break;
@@ -73,7 +74,7 @@ void relatorio::relatorio5() const{
     cout << "Eleitos, que se beneficiaram do sistema proporcional:" << endl;
     cout << "(com sua posição no ranking de mais votados)" << endl;
 
-    int n = 0;
+    long unsigned int n = 0;
     for(const auto &c : this->candidatos) {
         n++;
         if(n <= this->eleitos.size()) continue;
@@ -136,12 +137,18 @@ void relatorio::relatorio7() const{
         int size = p.get_candidatos().size() - 1;
         candidato * ultimo = p.get_candidato_posicao(size);
 
-        if(primeiro->get_votos() > 1) cout << primeiro->get_nome() << " (" << primeiro->get_numero() << ", " << primeiro->get_votos() << " votos) / ";
-        else cout << primeiro->get_nome() << " (" << primeiro->get_numero() << ", " << primeiro->get_votos() << " voto) / ";
+        string p_num = to_string(primeiro->get_numero());
+        p_num.erase(std::remove(p_num.begin(), p_num.end(), '.'), p_num.end());
+
+        string u_num = to_string(ultimo->get_numero());
+        u_num.erase(std::remove(u_num.begin(), u_num.end(), '.'), u_num.end());
+
+        if(primeiro->get_votos() > 1) cout << primeiro->get_nome() << " (" << p_num << ", " << primeiro->get_votos() << " votos) / ";
+        else cout << primeiro->get_nome() << " (" << primeiro->get_numero() << ", " << p_num << " voto) / ";
 
 
-        if(ultimo->get_votos() > 1) cout << ultimo->get_nome() << " (" << ultimo->get_numero() << ", " << ultimo->get_votos() << " votos)" << endl;
-        else cout << ultimo->get_nome() << " (" << ultimo->get_numero() << ", " << ultimo->get_votos() << " voto)" << endl;
+        if(ultimo->get_votos() > 1) cout << ultimo->get_nome() << " (" << u_num << ", " << ultimo->get_votos() << " votos)" << endl;
+        else cout << ultimo->get_nome() << " (" << u_num << ", " << ultimo->get_votos() << " voto)" << endl;
     }
 
 }
@@ -212,11 +219,13 @@ void relatorio::relatorio10() const{
     }
 
     cout << "Total de votos válidos: " << total << endl;
-    cout << "Total de votos nominais: " << nominal << " (" << (nominal * 100) / total << "%)" << endl;
-    cout << "Total de votos de legenda: " << legenda << " (" << (legenda * 100) / total << "%)" << endl;
+    cout << "Total de votos nominais: " << nominal << " (" << (float) (nominal * 100) / total << "%)" << endl;
+    cout << "Total de votos de legenda: " << legenda << " (" << (float) (legenda * 100) / total << "%)" << endl;
 }
 
 void relatorio::gera_relatorio() const{
+    cout << setprecision(2) << fixed;
+
     this->relatorio1();
     cout << endl;
     this->relatorio2();

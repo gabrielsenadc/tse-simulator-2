@@ -5,13 +5,37 @@
 #include <sstream>
 #include <locale>
 
+string iso_8859_1_to_utf8(string &str)
+{
+  // adaptado de: https://stackoverflow.com/a/39884120 :-)
+  string strOut;
+  for (string::iterator it = str.begin(); it != str.end(); ++it)
+  {
+    uint8_t ch = *it;
+    if (ch < 0x80)
+    {
+      // já está na faixa ASCII (bit mais significativo 0), só copiar para a saída
+      strOut.push_back(ch);
+    }
+    else
+    {
+      // está na faixa ASCII-estendido, escrever 2 bytes de acordo com UTF-8
+      // o primeiro byte codifica os 2 bits mais significativos do byte original (ISO-8859-1)
+      strOut.push_back(0b11000000 | (ch >> 6));
+      // o segundo byte codifica os 6 bits menos significativos do byte original (ISO-8859-1)
+      strOut.push_back(0b10000000 | (ch & 0b00111111));
+    }
+  }
+  return strOut;
+}
+
 sistema_eleitoral::sistema_eleitoral(int cidade, string path_candidatos, string path_votos, calendario data_eleicao) {
 
     // Testar em um computador com permissão de sudo
-    /*locale lbrasil("pt_BR.UTF-8");
+    locale lbrasil("pt_BR.UTF-8");
     locale::global(lbrasil);
-    cin.imbue(lbrasil);
-    cout.imbue(lbrasil);*/
+
+    cout.imbue(lbrasil);
 
     ifstream arquivo_candidatos, arquivo_votos;
     istringstream linha_atual;
@@ -60,10 +84,12 @@ sistema_eleitoral::sistema_eleitoral(int cidade, string path_candidatos, string 
 
         dado_lido.erase(remove(dado_lido.begin(), dado_lido.end(), '\"'), dado_lido.end());
         string nome(dado_lido);
+        nome = iso_8859_1_to_utf8(nome);
 
         for(int i = 0; i < 6; i++) getline(linha_atual, dado_lido, ';');
 
         dado_lido.erase(remove(dado_lido.begin(), dado_lido.end(), '\"'), dado_lido.end());
+        dado_lido = iso_8859_1_to_utf8(dado_lido);
         if(!dado_lido.compare("FEDERAÇÃO")) federacao = true;
 
         getline(linha_atual, dado_lido, ';');
@@ -72,6 +98,7 @@ sistema_eleitoral::sistema_eleitoral(int cidade, string path_candidatos, string 
         getline(linha_atual, dado_lido, ';');
         dado_lido.erase(remove(dado_lido.begin(), dado_lido.end(), '\"'), dado_lido.end());
         string nome_partido(dado_lido);
+        nome_partido = iso_8859_1_to_utf8(dado_lido);
 
         partidos.insert({numero_partido, partido(numero_partido, nome_partido, federacao)});
 

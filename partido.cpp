@@ -54,7 +54,7 @@ candidato * partido::get_candidato_posicao(int pos){
 }
 
 bool compara_partidos(partido p1, partido p2) {
-    if(p2.get_votos_totais() == p1.get_votos_totais()) return p2.get_numero() < p1.get_numero();
+    if(p2.get_votos_totais() == p1.get_votos_totais()) return p2.get_numero() > p1.get_numero();
     return p2.get_votos_totais() < p1.get_votos_totais();
 }
 

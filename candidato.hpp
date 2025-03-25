@@ -24,7 +24,7 @@ class candidato {
     calendario nascimento;
     int eleito;
     genero mfo;
-    int votos;
+    int votos = 0;
 
     public:
 

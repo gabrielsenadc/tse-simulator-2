@@ -31,12 +31,6 @@ string iso_8859_1_to_utf8(string &str)
 
 sistema_eleitoral::sistema_eleitoral(int cidade, string path_candidatos, string path_votos, calendario data_eleicao) {
 
-    // Testar em um computador com permissão de sudo
-    locale lbrasil("pt_BR.UTF-8");
-    locale::global(lbrasil);
-
-    cout.imbue(lbrasil);
-
     ifstream arquivo_candidatos, arquivo_votos;
     istringstream linha_atual;
 
@@ -207,6 +201,7 @@ sistema_eleitoral::sistema_eleitoral(int cidade, string path_candidatos, string 
 
     arquivo_votos.close();
     arquivo_candidatos.close();
+
 }
 
 const map<int, candidato> &sistema_eleitoral::get_candidatos() const {

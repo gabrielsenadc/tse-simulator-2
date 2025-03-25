@@ -10,6 +10,12 @@
 using namespace std;
 
 int main(int argc, char **argv){
+
+    locale lbrasil("pt_BR.UTF-8");
+    locale::global(lbrasil);
+
+    cout.imbue(lbrasil);
+
     if(argc < 5) {
         cout << "Parametros Faltando" << endl;
         exit(1);
@@ -23,6 +29,12 @@ int main(int argc, char **argv){
 
     relatorio r(se.get_candidatos(), se.get_partidos(), data);
     r.gera_relatorio();
+
+    locale loc(cout.getloc(), new numpunct<char>);
+	cout.imbue(loc);
+
+    cout.imbue(locale("C"));
+    std::locale::global(std::locale("C"));
 
     return 0;
 }

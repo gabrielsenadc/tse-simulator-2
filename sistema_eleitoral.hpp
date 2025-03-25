@@ -2,18 +2,18 @@
 #define apurador_h
 
 #include <map>
-#include <chrono>
+#include "calendario.hpp"
 #include "candidato.hpp"
 #include "partido.hpp"
 
-class apurador {
+class sistema_eleitoral {
 
     map<int, candidato> candidatos;
     map<int, partido> partidos;
 
     public:
 
-    apurador(int cidade, string path_candidatos, string path_votos, chrono::year_month_day data_eleicao);
+    sistema_eleitoral(int cidade, string path_candidatos, string path_votos, calendario data_eleicao);
 
     const map<int, candidato> &get_candidatos() const;
 

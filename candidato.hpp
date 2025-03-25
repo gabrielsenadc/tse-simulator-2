@@ -26,7 +26,7 @@ class candidato {
 
     public:
 
-    candidato(const int &numero, const string &nome, partido * p, const calendario &nascimento, const int &eleito, const genero mfo) :
+    candidato(const int &numero, const string &nome, partido * p, const calendario &nascimento, const bool &eleito, const genero mfo) :
         numero(numero), nome(nome), p(p), nascimento(nascimento), eleito(eleito), mfo(mfo) {}
 
     const int &get_numero() const;

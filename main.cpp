@@ -14,13 +14,14 @@ int main(int argc, char **argv){
         cout << "Parametros Faltando" << endl;
         exit(1);
     }
-    int cidade = stoi(argv[0]);
 
-    calendario data(8, 9, 2024);
+    int cidade = stoi(argv[1]);
 
-    sistema_eleitoral se(cidade, string(argv[1]), string(argv[2]), data);
+    calendario data(6, 10, 2024);
 
-    relatorio r(se.get_candidatos(), se.get_partidos());
+    sistema_eleitoral se(cidade, string(argv[2]), string(argv[3]), data);
+
+    relatorio r(se.get_candidatos(), se.get_partidos(), data);
     r.gera_relatorio();
 
     return 0;

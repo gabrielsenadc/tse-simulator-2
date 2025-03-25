@@ -16,10 +16,10 @@ using namespace std;
 class partido {
     int numero;
     string nome;
-    map<int, candidato*> candidatos;
-    int quantidade_eleitos;
-    int votos_nominais;
-    int votos_legenda;
+    vector<candidato*> candidatos;
+    int quantidade_eleitos = 0;
+    int votos_nominais = 0;
+    int votos_legenda = 0;
     bool federacao;
 
     public:
@@ -39,15 +39,17 @@ class partido {
 
     const bool &is_federacao() const;
 
-    void adiciona_candidato(candidato c);
+    void adiciona_candidato(candidato * c);
 
     void adiciona_votos_nominais(int novos_votos);
 
     void adiciona_votos_legenda(int novos_votos);
 
-    map<int, candidato*> get_candidatos() const;
+    vector<candidato*> get_candidatos() const;
 
-    //void sort_candidatos();
+    void sort_candidatos();
+
+    candidato * get_candidato_posicao(int pos);
     
 };
 

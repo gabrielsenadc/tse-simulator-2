@@ -28,8 +28,9 @@ const bool &partido::is_federacao() const {
     return this -> federacao;
 }
 
-void partido::adiciona_candidato(candidato c) {
-    this -> candidatos.insert({c.get_numero(), &c});
+void partido::adiciona_candidato(candidato * c) {
+    this -> candidatos.push_back(c);
+    if(c->get_eleito()) this -> quantidade_eleitos++;
 }
 
 void partido::adiciona_votos_nominais(int novos_votos) {
@@ -40,21 +41,26 @@ void partido::adiciona_votos_legenda(int novos_votos) {
     this -> votos_legenda += novos_votos;
 }
 
-map<int, candidato*> partido::get_candidatos() const{
+vector<candidato*> partido::get_candidatos() const{
     return this->candidatos;
 }
 
-/*void partido::sort_candidatos() {
-    sort(this->candidatos.begin(), this->candidatos.end(), compara_candidatos);
-}*/
-
-bool compara_partidos(partido p1, partido p2) {
-    if(p1.get_votos_totais() != p2.get_votos_totais()) return p1.get_votos_totais() > p2.get_votos_totais();
-
-    return p2.get_numero() > p1.get_numero();
+void partido::sort_candidatos() {
+    sort(this->candidatos.begin(), this->candidatos.end(), compara_candidatos_ponteiro);
 }
 
-// Essa aqui n�o est� pronta
+candidato * partido::get_candidato_posicao(int pos){
+    return this->candidatos[pos];
+}
+
+bool compara_partidos(partido p1, partido p2) {
+    if(p2.get_votos_totais() == p1.get_votos_totais()) return p2.get_numero() < p1.get_numero();
+    return p2.get_votos_totais() < p1.get_votos_totais();
+}
+
 bool compara_partidos_posicao(partido p1, partido p2) {
-    return true;
+    candidato * c1 = p1.get_candidato_posicao(0);
+    candidato * c2 = p2.get_candidato_posicao(0);
+
+    return compara_candidatos_ponteiro(c1, c2);
 }

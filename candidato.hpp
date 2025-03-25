@@ -39,7 +39,7 @@ class candidato {
 
     const calendario &get_nascimento() const;
 
-    const int &get_eleito() const;
+    bool get_eleito() const;
 
     const genero &get_genero() const;
 
@@ -52,5 +52,7 @@ class candidato {
 };
 
 bool compara_candidatos(candidato c1, candidato c2);
+
+bool compara_candidatos_ponteiro(candidato * c1, candidato * c2);
 
 #endif

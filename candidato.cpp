@@ -16,7 +16,7 @@ const calendario &candidato::get_nascimento() const {
     return this -> nascimento;
 }
 
-const int &candidato::get_eleito() const {
+bool candidato::get_eleito() const {
     return this -> eleito;
 }
 
@@ -34,11 +34,19 @@ int candidato::get_idade(calendario data) const {
 
 void candidato::aumenta_votos(const int novos_votos) {
     this -> votos += novos_votos;
+    this->p->adiciona_votos_nominais(novos_votos);
 }
 
 bool compara_candidatos(candidato c1, candidato c2){
     if(c1.get_votos() != c2.get_votos()) return c1.get_votos() > c2.get_votos();
 
     if(calendario_mais_antigo(c1.get_nascimento(), c2.get_nascimento()) == 1) return true;
+    else return false;
+}
+
+bool compara_candidatos_ponteiro(candidato * c1, candidato * c2){
+    if(c1->get_votos() != c2->get_votos()) return c1->get_votos() > c2->get_votos();
+
+    if(calendario_mais_antigo(c1->get_nascimento(), c2->get_nascimento()) == 1) return true;
     else return false;
 }

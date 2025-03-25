@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <algorithm>
+#include <vector>
 
 class partido;
 
@@ -14,7 +16,7 @@ using namespace std;
 class partido {
     int numero;
     string nome;
-    map<int, candidato> candidatos;
+    map<int, candidato*> candidatos;
     int quantidade_eleitos;
     int votos_nominais;
     int votos_legenda;
@@ -33,7 +35,7 @@ class partido {
 
     const int &get_votos_legenda() const;
 
-    const int &get_votos_totais() const;
+    int get_votos_totais() const;
 
     const bool &is_federacao() const;
 
@@ -43,9 +45,9 @@ class partido {
 
     void adiciona_votos_legenda(int novos_votos);
 
-    map<int, candidato> get_candidatos() const;
+    map<int, candidato*> get_candidatos() const;
 
-    void sort_candidatos();
+    //void sort_candidatos();
     
 };
 

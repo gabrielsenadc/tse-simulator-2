@@ -28,7 +28,7 @@ const int &candidato::get_votos() const {
     return this -> votos;
 }
 
-const int &candidato::get_idade(calendario data) const {
+int candidato::get_idade(calendario data) const {
     return calendario_diferenca_anos(this -> nascimento, data);
 }
 

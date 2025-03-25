@@ -11,7 +11,7 @@ class calendario {
 
     public:
     
-    calendario(const int dia, const int mes, const int ano);
+    calendario(const int dia, const int mes, const int ano): dia(dia), mes(mes), ano(ano){};
 
     const int &get_dia() const;
 

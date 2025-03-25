@@ -3,14 +3,13 @@
 
 #include <iostream>
 #include <string>
-#include <chrono>
+#include <algorithm>
 #include <map>
 #include <vector>
 #include "partido.hpp"
 #include "candidato.hpp"
 
 using namespace std;
-using namespace std::chrono;
 
 class relatorio {
     vector<candidato> candidatos;

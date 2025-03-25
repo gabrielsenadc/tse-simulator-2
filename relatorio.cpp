@@ -15,7 +15,7 @@ relatorio::relatorio(map<int, candidato> candidatos, map<int, partido> partidos)
     
     sort(this->candidatos.begin(), this->candidatos.end(), compara_candidatos);
 
-    for(const auto c : this->candidatos) if(c.get_eleito()) this->eleitos.push_back(c);
+    for(const auto &c : this->candidatos) if(c.get_eleito()) this->eleitos.push_back(c);
     
 }
 
@@ -30,7 +30,7 @@ void relatorio::relatorio2() const{
     cout << "Vereadores eleitos:" << endl;
 
     int n = 1;
-    for(const auto c : this->candidatos) {
+    for(const auto &c : this->candidatos) {
         if(!c.get_eleito()) continue;
 
         candidato_imprime(c, n++);
@@ -43,7 +43,7 @@ void relatorio::relatorio3() const{
     cout << "Candidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):" << endl;
 
     int n = 1;
-    for(const auto c : this->candidatos) {
+    for(const auto &c : this->candidatos) {
         if(n > this->eleitos.size()) break;
 
         candidato_imprime(c, n++);
@@ -57,7 +57,7 @@ void relatorio::relatorio4() const{
     cout << "(com sua posição no ranking de mais votados)" << endl;
 
     int n = 0;
-    for(const auto c : this->candidatos) {
+    for(const auto &c : this->candidatos) {
         n++;
         if(n > this->eleitos.size()) break;
 
@@ -74,7 +74,7 @@ void relatorio::relatorio5() const{
     cout << "(com sua posição no ranking de mais votados)" << endl;
 
     int n = 0;
-    for(const auto c : this->candidatos) {
+    for(const auto &c : this->candidatos) {
         n++;
         if(n <= this->eleitos.size()) continue;
         
@@ -94,7 +94,7 @@ void relatorio::relatorio6() const{
     sort(vector_partidos.begin(), vector_partidos.end(), compara_partidos);
 
     int n = 1;
-    for(const auto p : vector_partidos){
+    for(const auto &p : vector_partidos){
 
         cout << n++ << " - " << p.get_nome() << " - " << p.get_numero() << ", ";
 
@@ -122,7 +122,7 @@ void relatorio::relatorio7() const{
     sort(vector_partidos.begin(), vector_partidos.end(), compara_partidos_posicao);
 
     int n = 0;
-    for(const auto p : vector_partidos){
+    for(const auto &p : vector_partidos){
         n++;
         if(p.get_votos_nominais() == 0) continue;
 
@@ -145,8 +145,8 @@ void relatorio::relatorio7() const{
 void relatorio::relatorio8() const{
     int b30 = 0, b30_40 = 0, b40_50 = 0, b50_60 = 0, b60 = 0;
 
-    int idade = 0;
-    /*for(const auto c : this->eleitos){
+    /*int idade = 0;
+    for(const auto &c : this->eleitos){
         idade = c.get_idade();
 
         if(idade < 30) b30++;
@@ -175,7 +175,7 @@ void relatorio::relatorio8() const{
 void relatorio::relatorio9() const{
     int m = 0, f = 0;
 
-    for(const auto c : this->eleitos){
+    for(const auto &c : this->eleitos){
         if(c.get_genero() == 2) m++;
         else f++;
     }

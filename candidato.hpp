@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <string>
-#include <chrono>
+
+class candidato;
+
 #include "partido.hpp"
 #include "calendario.hpp"
 
@@ -43,7 +45,7 @@ class candidato {
 
     const int &get_votos() const;
 
-    const int &get_idade(calendario data) const;
+    int get_idade(calendario data) const;
 
     void aumenta_votos(const int novos_votos);
 

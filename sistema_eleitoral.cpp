@@ -105,8 +105,15 @@ sistema_eleitoral::sistema_eleitoral(int cidade, string path_candidatos, string 
         }
 
         getline(arquivo_candidatos, linha);
+        linha_atual = istringstream(linha);
         
     }
+
+    arquivo_votos.open(path_votos);
+    getline(arquivo_votos, linha);
+    linha_atual = istringstream(linha);
+
+    // Copiar e adaptar a parte respectiva no T1
 
     arquivo_candidatos.close();
 }
